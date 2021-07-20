@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- jquery imports-->
+    
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+        <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+        
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+        <style>
+            #example th , #example td{
+                text-align: center;
+              }
+              
+              #example tr:nth-child(even){
+                background-color: #e4e2e2;
+              }
+        </style>
+        <title>Search By Items</title>
+    </head>
+<body>
+    {% block main_content %}
+    <div>
+        {% include "frontheader.html" %} 
+    </div>
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <br>
+    <center> <h1>Shops List </h1></center>
+    <br><br>
+
+    <center>
+        <div style="width: 100%;" >
+            <table id="example" class="" style="width:100%" border="1">
+                <thead>
+                    <tr>
+                        <th>Sr.no</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                    {% for i,a ,b in listdata %}
+                    <tr>
+                        <td></td>
+                        <td> <a href="displayshop?id={{i}}">{{a}}</a>   </td>
+                        <td>{{b}}</td>
+                        
+                    </tr>
+                     {% endfor %}
+                
+                </tbody>
+            </table>
+           
+        </div>
+    </center>
+    {% include "footer.html" %} 
+    {% endblock %}
+    {% block javascript %}
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "stripeClasses": [ 'odd-row', 'even-row' ],
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    //debugger;
+                    var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+                columnDefs: [
+                    { width: '50px', targets: 0 },
+                ]
+            });
+        });
+        d
+    </script>
+    {% endblock  %}
+</body>
+</html>

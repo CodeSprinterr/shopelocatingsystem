@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Item</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <style>
+        .content{
+            margin-top: 10%;
+            margin-left:40%;
+        }
+        .ui-autocomplete {
+            cursor: pointer;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 200px;
+        }
+        .example td{
+            text-align: center;
+        }
+    </style>
+    
+    
+</head>
+<body>
+    {% include "header.html" %}
+          
+    <div class="content">
+    <form action='additem' method="POST" >
+        <label name="itemname">Item name : </label> &nbsp;&nbsp;&nbsp;
+        <input type="text" id ="iname" name="iname"><br><br>
+        <label name="itemcategory">Category : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input type="text" id ="icategory" name="icategory"><br><br>
+        <input type="hidden" name="hiddenid" value={{id}}>
+        <input type="submit" value="submit"> 
+        
+    </form>
+    </div>
+    <table style="border:1px solid black; width:100%; border-collapse:separate; border-spacing:0 15px;text-align: center;" id="example" class="display">
+        <thead>
+        <tr>
+            <th>Sr.no</th>
+            <th>Item name</th>
+            <th>Item Category</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        {% for i, j in  listofitems %}
+        <tr>
+            <td></td>
+            <td>{{i}}</td>
+            <td>{{j}}</td>
+            
+        </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+
+    {% include "footer.html" %}
+    
+    
+    <input type="hidden" id="alertdata" value="{{alertdata}}">
+
+    <script>
+
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "fnRowCallback" : function(nRow, aData, iDisplayIndex){
+                    $("td:first", nRow).html(iDisplayIndex +1);
+                    return nRow;
+                },
+            });
+        } );
+
+        
+        var a = document.getElementById('alertdata').value;
+        if (a=='a')
+        {
+            alert("Item Already  exist");
+        }
+    </script>
+
+</body>
+
+
+</html>

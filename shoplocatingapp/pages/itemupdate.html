@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        .ui-autocomplete {
+            cursor: pointer;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 200px;
+        }
+    </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Update</title>
+    
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+</head>
+<body>
+    {% include "header.html" %}
+    
+    <form action='itemupdate' method="POST" autocomplete="off" onsubmit="return validateform()">
+        {% csrf_token %}
+        <table style="border-collapse:separate; border-spacing:0 15px; margin-left:40%; margin-top:4%; margin-bottom:3%;">
+            <tr>
+                
+                <td><label name="itemname">Item name : </label> </td>
+                <td><input type="text" id ="iname" name="iname"></td>
+            </tr>
+            <tr>
+                <td><label name="itemcategory">Category : </label> </td>
+                <td><input type="text" id ="icategory" name="icategory"></td>
+            </tr>
+            <tr>
+                <td><label name="updateitem">Update Item name : </label></td>              
+                <td><input type="text" id ="updateitem" name="updateitem"></td>
+            </tr>
+            <tr>
+                <td><label name="itemcategory">Update Category : </label></td>
+                <td><input type="text" id ="iucategory" name="iucategory"></td>
+                <td><input type="hidden" id="hiddenid" name="hiddenid" value={{id}}></td>
+            </tr>
+            
+            <tr><td><input type="submit" value="submit"></td></tr>
+        </table>
+        
+
+             
+    </form>
+
+
+        <table style="border:1px solid black; width:100%; border-collapse:separate; border-spacing:0 15px;text-align: center" id="example" class="display">
+            <thead>
+            <tr>
+                <th>Sr.no</th>
+                <th>Item name</th>
+                <th>Item Category</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for i, j in  listofitems %}
+            <tr>
+                <td></td>
+                <td>{{i}}</td>
+                <td>{{j}}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    
+    
+    
+    {% include "footer.html" %}
+    <script>
+        $(document).ready(function() {
+            $('#example').DataTable({
+                "fnRowCallback" : function(nRow, aData, iDisplayIndex){
+                    $("td:first", nRow).html(iDisplayIndex +1);
+                    return nRow;
+                },
+            });
+        } );
+
+        function validateform(){
+            a=document.getElementById('iname').value;
+            b=document.getElementById('icategory').value;
+            c=document.getElementById('updateitem').value;
+            d=document.getElementById('iucategory').value;
+
+            if (a=="" || b=="" || c=="" ||d=="")
+            {
+                alert("Please enter data correctly.");
+                return false;
+            }
+
+        };
+
+        function a(){
+            $("#iname").autocomplete({
+                source: '/itemupdatelist?id='+document.getElementById('hiddenid').value,
+                minLength: 0,
+                scroll: true,
+        
+                select: function (event, ui) {
+                    document.getElementById('icategory').value=ui.item.itcategory;
+                    document.getElementById('iucategory').value=ui.item.itcategory;
+                    
+                    document.getElementById('icategory').disabled=true;
+                }
+        
+            }).focus(function () {
+                $(this).autocomplete("search", "");
+            });
+
+        }
+        a();
+        
+    </script>
+</body>
+</html>

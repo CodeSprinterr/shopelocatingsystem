@@ -1,0 +1,158 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <style>
+        li{
+            margin-bottom: 15px;
+        }
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+          }
+          
+          html {
+            box-sizing: border-box;
+          }
+          
+          *, *:before, *:after {
+            box-sizing: inherit;
+          }
+          
+          .column {
+            float: left;
+            width: 25%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+          }
+          
+          .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 8px;
+          }
+          
+          .about-section {
+            padding: 10px;
+            text-align: center;
+            background-color: #474e5d;
+            color: white;
+            margin-top: 0.5%;
+            margin-left: 1%;
+            margin-right: 1%;
+          }
+          
+          .container {
+            padding: 0 16px;
+          }
+          
+          .container::after, .row::after {
+            content: "";
+            clear: both;
+            display: table;
+          }
+          
+          .title {
+            color: grey;
+          }
+          
+          .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+          }
+          
+          .button:hover {
+            background-color: #555;
+          }
+          
+          @media screen and (max-width: 650px) {
+            .column {
+              width: 100%;
+              display: block;
+            }
+          }
+    </style>
+</head>
+
+<body>
+    <div>
+        {% include "frontheader.html" %}
+    </div>
+  
+    
+    
+        <div class="about-section">
+            <h1>About Us </h1>
+            
+          </div>
+          
+          <h2 style="text-align:center">Our Team</h2>
+          <div class="row">
+            <div class="column">
+              <div class="card">
+                <img src="{% static 'images/aman.jpeg' %}" alt="aman" style="width:100%">
+                <div class="container">
+                  <h2>Aman Vaswani</h2>
+                  <p class="title">Designer and coder</p>
+                  
+                  <p>aman@gmail.com</p>
+                  <p><button class="button">Contact</button></p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="column">
+              <div class="card">
+                <img src="{% static 'images/aakash.jpeg' %}" alt="aakash" style="width:100%">
+                <div class="container">
+                  <h2>Aakash Vaidya</h2>
+                  <p class="title">Designer and coder</p>
+                 
+                  <p>aakash@gmail.com</p>
+                  <p><button class="button">Contact</button></p>
+                </div>
+              </div>
+            </div>
+          
+            <div class="column">
+              <div class="card">
+                <img src="{% static 'images/arpita.jpeg' %}" alt="arpita" style="width:100%">
+                <div class="container">
+                  <h2>Arpita Tathe</h2>
+                  <p class="title">Designer and coder</p>
+                  
+                  <p>arpita@gmail.com</p>
+                  <p><button class="button">Contact</button></p>
+                </div>
+              </div>
+            </div>
+    
+            <div class="column">
+                <div class="card">
+                  <img src="{% static 'images/toshinee.jpeg' %}" alt="toshi" style="width:100%">
+                  <div class="container">
+                    <h2>Toshinee Bhasin</h2>
+                    <p class="title">Designer and coder</p>
+                    
+                    <p>toshinee@gmail.com</p>
+                    <p><button class="button">Contact</button></p>
+                  </div>
+                </div>
+              </div>
+          </div>
+
+          {% include "footer.html" %} 
+</body>
+
+</html>

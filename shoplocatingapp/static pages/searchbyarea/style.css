@@ -1,0 +1,62 @@
+.logoblock{
+    height: 100px;  
+}
+body{
+    margin:0;
+}
+
+.navbar {
+    overflow: hidden;
+    background-color: teal;
+    font-family: Arial;
+  }
+#example th , #example td{
+  text-align: center;
+
+}
+
+#example tr:nth-child(even){
+  background-color: #e4e2e2;
+}
+  
+  .navbar a {
+    float: left;
+    font-size: 16px;
+    color: white;
+    text-align: center;
+    padding: 14px 30px;
+    text-decoration: none;
+    
+  }
+
+  .navbar a:hover{
+    background-color: cadetblue;
+  }
+  
+  
+  .dropdown-content a {
+    float: none;
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .selectsdca{
+      margin-top: 50px;
+      
+      
+  }
+  .selectsdca label{
+      font-size: 17px;
+      margin-right: 30px;
+  }
+  .selectsdca input {
+      font-size: 17px;
+      padding: 5px;
+  }
+  .selectsdcatable td{
+      padding-bottom: 20px;
+
+  }

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apkidukan</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body>
+    {% include "header1.html" %}
+    <center>
+    <div style="margin-top: 100px;"> 
+        <form method="POST" action="addlocation">
+        {% csrf_token %}
+        <input type="hidden" name="test" id="test" value="{{a}}">
+       <label> Login  </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <input type="text" name="login" id="login">
+       <br>
+       <br>
+       <label> Password </label> &nbsp;&nbsp;
+       <input type="password" name="password" id="password">
+       <br>
+       <br>
+       <br>
+       <input type="submit" value="login">
+       </form>
+    </div>
+    </center>
+    <br><br><br><br><br>
+    <script>
+        if(document.getElementById('test').value==1)
+       {
+           alert('Incorrect Login Details....');
+       }
+       if(document.getElementById('test').value==4)
+       {
+           alert('Invalid username or password....');
+           window.location.href="operatorlogin";
+       }
+    </script>
+ 
+{% include "footer.html" %}  
+</body>
+</html>

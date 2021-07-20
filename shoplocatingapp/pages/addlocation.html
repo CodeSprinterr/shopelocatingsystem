@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apkidukan</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script>
+         function clearstatedata()
+        {
+            document.getElementById('state').value="";
+            document.getElementById('district').value="";
+            document.getElementById('city1').value="";
+            document.getElementById('area').value="";
+        }
+        function cleardistrictdata()
+        {
+            document.getElementById('district').value="";
+            document.getElementById('city1').value="";
+            document.getElementById('area').value="";
+        }
+        function clearcitydata()
+        {
+            document.getElementById('city1').value="";
+            document.getElementById('area').value="";
+        }
+
+    </script>
+    <style>
+        .ui-autocomplete {
+            cursor: pointer;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    {% include "header1.html" %}
+    <center>
+    <div style="margin-top: 100px;"> 
+        <form method="POST" action="addlocation">
+        {% csrf_token %}
+        <input type="hidden" name="test" id="test" value="{{a}}">
+       <label> State :  </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <input type="text" name="state" id="state" value="{{listdata.0}}">&nbsp;&nbsp;&nbsp;
+       <input type="button" value="Clear" name="clearstate" id="clearstate" onclick="clearstatedata()">
+       <br>
+       <br>
+       <label> District :  </label> &nbsp;
+       <input type="text" name="district" id="district" value="{{listdata.1}}">&nbsp;&nbsp;&nbsp;
+       <input type="button" value="Clear" name="cleardistrict" id="cleardistrict" onclick="cleardistrictdata()">
+       <br>
+       <br>
+       <label> City : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <input type="text" name="city1" id="city1" value="{{listdata.2}}">&nbsp;&nbsp;&nbsp;
+       <input type="button" value="Clear" name="clearcity" id="clearcity" onclick="clearcitydata()">
+       <br>
+       <br>
+       <label> Area : </label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+       <input type="text" name="area" id="area">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp&nbsp;&nbsp;&nbsp;
+       <br>
+       <br>
+       <br>
+       <input type="submit" value="Enter Location" id="enter"> 
+       </form>
+    </div>
+    </center>
+    <script>
+     if(document.getElementById('test').value==1)
+    {
+        alert('Data Already Exits....');
+    }  
+    if(document.getElementById('test').value==2)
+    {
+        alert('Loaction Entered Successfully....');
+    }  
+    if(document.getElementById('test').value==3)
+    {
+        alert('Please check Incorrect or Blank Data Is Inserted....');
+    }  
+    statefunc(document.getElementById("state").value);
+    districtfunc(document.getElementById("district").value);
+    cityfunc(document.getElementById("city1").value);
+    
+        $(function () {
+
+    
+
+$("#state").autocomplete({
+    source: '/state',
+    minLength: 0,
+    scroll: true,
+
+    select: function (event, ui) {
+        document.getElementById("district").value = ""
+        document.getElementById("city1").value = ""
+        document.getElementById("area").value = "";
+        statefunc(ui.item.value)
+    }
+
+}).focus(function () {
+    $(this).autocomplete("search", "");
+});
+});
+
+function statefunc(tempdata) {
+
+
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200) {
+
+        var districtdata = this.responseText;
+
+        var a = eval(districtdata);
+        $("#district").autocomplete({
+            source: function (request, response) {
+                var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+                response($.map(a, function (item) {
+                    if (matcher.test(item)) {
+                        return (item)
+                    }
+                }));
+            },
+            delay: 0,
+            minLength: 0,
+            scroll: true,
+            select: function (event, ui) {
+                document.getElementById("city1").value = ""
+                document.getElementById("area").value = "";
+                districtfunc(ui.item.value)
+            }
+
+        }).focus(function () {
+            $(this).autocomplete("search", "");
+        });
+
+
+    }
+};
+
+xhttp.open("post", "district", true);
+xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhttp.send("statename=" + tempdata);
+
+}
+
+
+
+
+
+function districtfunc(tempdata) {
+
+
+
+
+$("#city1").autocomplete({
+    source: function (request, response) {
+        jQuery.get("citylist", {
+            term: request.term,
+            statedata:  document.getElementById("state").value,
+            districtdata:  document.getElementById("district").value,
+        }, function (data) {
+            // assuming data is a JavaScript array such as
+            // ["one@abc.de", "onf@abc.de","ong@abc.de"]
+            // and not a string
+            response(data);
+        });
+    },
+    delay: 0,
+    minLength: 0,
+    scroll: true,
+    select: function (event, ui) {
+        document.getElementById("area").value = "";
+        cityfunc(ui.item.value);
+    }
+
+}).focus(function () {
+    $(this).autocomplete("search", "");
+});
+
+}
+
+function cityfunc(tempdata) {
+
+
+
+$("#area").autocomplete({
+    source: function (request, response) {
+        jQuery.get("arealist", {
+            term: request.term,
+            statedata:  document.getElementById("state").value,
+            districtdata:  document.getElementById("district").value,
+            citydata : document.getElementById("city1").value,
+        }, function (data) {
+            
+            response(data);
+        });
+    },
+    delay: 0,
+    minLength: 0,
+    scroll: true,
+    select: function (event, ui) {
+        document.getElementById("enter").disabled = false;
+        
+    }
+    
+
+}).focus(function () {
+    $(this).autocomplete("search", "");
+});
+
+
+}
+    </script>
+    {% include "footer.html" %}
+ </body>

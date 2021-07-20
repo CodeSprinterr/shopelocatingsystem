@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <style>
+        p{
+            font-size: large;
+        }
+       td{
+           padding-top: 20px;
+       }
+       #example th , #example td{
+            text-align: center;
+            
+            
+          }
+          
+        #example tr:nth-child(even){
+            background-color: #e4e2e2;
+          }
+    
+    </style>
+</head>
+<body>
+    {% include "header.html" %}
+    <center>
+        <h1>{{data.0}}</h1>
+        <br>
+        
+    </center>
+    <div>
+        <div style="display: inlineblock; width: 40%;float: left;margin-left: 10%;">
+            <table>
+                <tr>
+                    <td style="vertical-align:top ;"><b>Description : </b></td>
+                    <td style="vertical-align: top; padding-left: 20px; ">{{data.2 | linebreaksbr}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>Contact : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.3}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>E-mail : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.4}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>Address : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.5}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>area : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.6}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>city : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.7}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>District : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.8}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>State : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.9}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>Holiday : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.10}}</td>
+                </tr>
+                <tr>
+                    <td style="vertical-align:top ;"><b>type : </b></td>
+                    <td>&nbsp;&nbsp;&nbsp;&nbsp;{{data.11}}</td>
+                </tr>
+            </table>          
+        </div>
+        <div style="display: inlineblock; width: 50%;float:left">
+            <center><img style="max-height: 300px; max-width: 450px;" src="/media/{{data.1}}" %}" alt=""></center>
+        </div>
+        <div style="clear: both;"></div>
+    </div>
+    <div>
+        <center>
+            <h1>Items List</h1>
+            <div style="width: 100%;" >
+                <table id="example" class="" style="width:100%" border="1">
+                    <thead>
+                        <tr>
+                            <th>Sr.no</th>
+                            <th>Item Name</th>
+                            <th>Item Category</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                      
+                        {% for a ,b in itemlistdata %}
+                        <tr>
+                            <td></td>
+                            <td> {{a}}   </td>
+                            <td>{{b}}</td>
+                            
+                        </tr>
+                         {% endfor %}
+                    
+                    </tbody>
+                </table>
+               
+            </div>
+            
+        </center>
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    "stripeClasses": [ 'odd-row', 'even-row' ],
+                    "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                        //debugger;
+                        var index = iDisplayIndexFull + 1;
+                        $("td:first", nRow).html(index);
+                        return nRow;
+                    },
+                    columnDefs: [
+                        { width: '50px', targets: 0 },
+                    ]
+                });
+            });
+        </script>
+    
+    {% include "footer.html" %} 
+</body>
+</html>

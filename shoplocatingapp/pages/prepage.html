@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <style>
+        .ui-autocomplete {
+            max-height: 200px;
+            overflow-y: auto;   /* prevent horizontal scrollbar */
+            overflow-x: hidden; /* add padding to account for vertical scrollbar */
+            
+        }
+    </style>
+</head>
+<body style="margin:0">
+    <center>
+        <div style="margin-top: 200px; height:230px; background-color: #555; color: white;" >
+            <br>
+            <h1><b>Welcome to aapkidukan</b></h1>
+            <p>
+                <h3>Please Enter city to continue</h3>
+            </p>
+            <input style="width:300px; height: 40px;font-size: large;" type="text" name="city" id="city" placeholder="Enter your City Name">
+
+        </div>
+    </center>
+   <script>
+    $("#city").autocomplete({
+        source: '/getlocation',
+        minLength: 0,
+        scroll: true,
+//in development
+        select: function (event, ui) {
+            var expiryDate = new Date();
+            expiryDate.setMonth(expiryDate.getMonth() + 12);
+            document.cookie = "state="+ui.item.state+"; expires=" + expiryDate.toGMTString();
+            document.cookie = "district="+ui.item.dist+"; expires=" + expiryDate.toGMTString();
+            document.cookie = "city="+ui.item.label+"; expires=" + expiryDate.toGMTString();
+            window.location.replace('/');
+        }
+        
+    }).focus(function () {
+        $(this).autocomplete("search", "");
+    }).autocomplete("instance")._renderItem = function (ul, item) {
+        return $("<li>")
+            .append("<div style='font-size: 12px;'>" +"city : "+ item.label + "<br>" +"District:"+ item.dist +  "<br>" +"state"+ item.state + "</div>")
+            .appendTo(ul);
+    };
+   </script>
+</body>
+</html>

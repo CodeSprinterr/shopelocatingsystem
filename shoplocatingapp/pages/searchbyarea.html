@@ -1,0 +1,170 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="{% static 'searchbyarea/style.css' %} ">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jquery imports-->
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+    <style>
+        .ui-autocomplete {
+            cursor: pointer;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 200px;
+        }
+    </style>
+    <title>Search Shop By Area</title>
+</head>
+
+<body>
+    <input type="hidden" id="nameisthere" value="{{nameisthere}}">
+    
+    <div>
+        {% include "frontheader.html" %} 
+    </div>
+    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
+    
+    <center>
+        <div class="selectsdca">
+            <form autocomplete="off" action="searchbyarea" method="GET">
+                <table class=selectsdcatable>
+                    <tr>
+                        <td><label>1) Select State</label></td>
+                        <td><input type="text" name="state" id="state" ></td>
+                    </tr>
+                    <tr>
+                        <td><label>2) Select District</label></td>
+                        <td><input type="text" name="district" id="district" disabled></td>
+                    </tr>
+                    <tr>
+                        <td><label>3) Select City</label></td>
+                        <td><input type="text" name="city1" id="city1" disabled></td>
+                    </tr>
+                    <tr>
+                        <td><label>4) Select Area</label></td>
+                        <td><input type="text" name="area" id="area" disabled></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align: center;"> <input id="search" type="submit" value="search"
+                                 disabled></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </center>
+    <br><br><br>
+    <center>
+    <div style="width: 100%;" >
+        <table id="example" class="" style="width:100%" border = 1>
+            <thead>
+                <tr>
+                    <th>Sr.no</th>
+                    <th>Name</th>
+                    <th>Address</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i,a ,b in listdata %}
+                <tr>
+                    <td></td>
+                    <td> <a href="displayshop?id={{i}}">{{a}}</a>   </td>
+                    <td>{{b}}</td>
+                    
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        
+    </div>
+</center>
+{% include "footer.html" %} 
+<script src="{% static 'autocompletefetch.js' %}">
+
+</script>
+    <script>
+        function getCookie(cname) {
+            var name = cname + "=";
+            var decodedCookie = decodeURIComponent(document.cookie);
+            var ca = decodedCookie.split(';');
+            for(var i = 0; i <ca.length; i++) {
+              var c = ca[i];
+              while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+              }
+              if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+              }
+            }
+            return "";
+          }
+
+
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "stripeClasses": [ 'odd-row', 'even-row' ],
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    //debugger;
+                    var index = iDisplayIndexFull + 1;
+                    $("td:first", nRow).html(index);
+                    return nRow;
+                },
+                columnDefs: [
+                    { width: '50px', targets: 0 },
+                ]
+            });
+            
+            if(document.getElementById("nameisthere").value == "yes")
+            {
+                
+                document.getElementById("state").disabled = false;
+                document.getElementById("district").disabled = false;
+                document.getElementById("city1").disabled = false;
+                document.getElementById("area").disabled = false;
+               
+                const queryString = window.location.search;
+                const urlParams = new URLSearchParams(queryString);
+                document.getElementById("state").value = urlParams.get('state');
+                statefunc(document.getElementById("state").value)
+                document.getElementById("district").value = urlParams.get('district');
+                districtfunc(document.getElementById("district").value)
+                document.getElementById("city1").value = urlParams.get('city1');
+                cityfunc( document.getElementById("city1").value);
+                document.getElementById("area").value = urlParams.get('area');
+                document.getElementById("search").disabled = false;
+                
+            }
+            if(document.getElementById("nameisthere").value == "no")
+            {
+                document.getElementById("state").disabled = false;
+                document.getElementById("district").disabled = false;
+                document.getElementById("city1").disabled = false;
+                document.getElementById("area").disabled = false;
+
+                document.getElementById("state").value = getCookie('state');
+                document.getElementById("district").value = getCookie('district');
+                document.getElementById("city1").value = getCookie('city');
+                statefunc(document.getElementById("state").value)
+                
+                districtfunc(document.getElementById("district").value)
+                
+                cityfunc( document.getElementById("city1").value);
+            }
+
+        });
+    </script>
+
+   
+
+</body>
+
+</html>

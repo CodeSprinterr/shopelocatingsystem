@@ -1,0 +1,107 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact us</title>
+    <style>
+        
+        .contact{
+            border: 1px solid black; 
+            height:30%; 
+            width:35%;
+            margin-top: 5%;
+            margin-left: 10%;
+        }
+
+        
+        * {
+            box-sizing: border-box;
+          }
+          
+          .about-section {
+            padding: 5px;
+            text-align: center;
+            background-color: #474e5d;
+            margin-left: 4px;
+            color: white;
+            
+          }
+          
+                    
+          
+          .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 10px;
+          }
+          
+          
+          .column {
+            float: left;
+            width: 50%;
+            margin-top: 2px;
+            padding: 50px;
+            font-size: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: justify;
+            text-decoration: #ccc;
+            
+          }
+          
+          
+          .row:after {
+            content: "";
+            display: table;
+            clear: both;
+          }
+          
+          
+          @media screen and (max-width: 600px) {
+            .column, input[type=submit] {
+              width: 100%;
+              margin-top: 0;
+            }
+          }
+    </style>
+</head>
+
+<body>
+    <div>
+        {% include "frontheader.html" %}
+    </div>
+    
+    
+    <div class="container">
+        <div style="text-align:center">
+
+            <div class="about-section">
+          <h2 style="font-size:34px;">Contact Us</h2>
+        </div>
+
+          <p>Please get in touch and our expert support team will answer all your questions</p>
+        </div>
+        <div class="row">
+          <div class="column">
+            <img src="{% static 'images/contactus.jpeg' %}" style="width:100%">
+          </div>
+          <div class="column">
+            
+              <label for="email">Email: apkidukan99@gmail.com</label>
+              <br><br><br>
+              <label for="contact">Contact no: 1234567890</label>
+              <br><br><br>
+              <label for="Instagram">Instagram : apkidukan99</label>
+              <br><br><br>
+            
+          
+        </div>
+      </div>
+      {% include "footer.html" %} 
+
+</body>
+
+</html>

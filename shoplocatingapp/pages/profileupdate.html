@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <script>
+        function validateform() {
+            //confirm password
+            var pass = document.getElementById("spass").value;
+            var cpass = document.getElementById("confirmpass").value;
+            if(pass == cpass){  
+            }
+            else{
+                alert("Both passwords are not same");
+                return false;
+            }
+            //empty field validation of shopname
+            
+          } 
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <title>Update Profile</title>
+    <style>
+        i {
+            margin-left: -30px;
+            cursor: pointer;
+        }
+        input[type=text], input[type=email],input[type=password], textarea{
+            width: 300px;
+        }
+
+        textarea{
+            height: 150px;
+        }
+        .ui-autocomplete {
+            cursor: pointer;
+            overflow-y: scroll;
+            overflow-x: hidden;
+            max-height: 200px;
+        }
+    </style>
+</head>
+<body>
+    {% include "header.html" %}
+    <center>
+    <form action="profileupdate" method="POST" autocomplete="off" onsubmit="return validateform()" enctype="multipart/form-data" name="myform" >
+        
+        {% csrf_token %}
+        <table style="border-collapse:separate; border-spacing:0 15px;  margin-top:4%; ">
+            <tr>
+                
+                <td><label name="shopname">Shop name : </label> </td>
+                <td><input type="text" id ="sname" name="sname" value="{{listofshopdata.0}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopimage">Image: </label> </td>
+                <td><input type="file" id ="simage" name="simage" >{{listofshopdata.1}}</td>
+                <input type="hidden" name="hideimg" id="hideimg" value="{{listofshopdata.1}}">
+            </tr>
+            <tr>
+                <td><label name="shopdesc">Description : </label></td>              
+                <td><textarea id ="sdesc" name="sdesc" style="resize: none;"  required>{{listofshopdata.2}}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td><label name="shopcontact">Contact : </label></td>
+                <td><input type="text" id ="scontact" name="scontact" value="{{listofshopdata.3}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopemail">Email : </label></td>
+                <td><input type="email" id ="smail" name="smail" value="{{listofshopdata.4}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopaddress">Address : </label></td>
+                <td><input type="text" id ="saddress" name="saddress" value="{{listofshopdata.5}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopstate">State : </label></td>
+                <td><input type="text" id ="state" name="state" value="{{listofshopdata.6}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopdistrict">District : </label></td>
+                <td><input type="text" id ="district" name="district" value="{{listofshopdata.7}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopcity">City: </label></td>
+                <td><input type="text" id ="city1" name="city1" value="{{listofshopdata.8}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shoparea">Area : </label></td>
+                <td><input type="text" id ="area" name="area" value="{{listofshopdata.9}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopholiday">Holiday : </label></td>
+                <td><input type="text" id ="sholiday" name="sholiday" value="{{listofshopdata.10}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shoptype">Type : </label></td>
+                <td><input type="text" id ="stype" name="stype" value="{{listofshopdata.11}}" required></td>
+            </tr>
+            <tr>
+                <td><label name="shopusername">Username : </label></td>
+                <td>{{listofshopdata.12}}</td>
+                <input type="hidden" name="hiddenid" value={{id}}>
+                </td>
+            </tr>
+            <tr>
+                <td><label name="shoppassword">Password : </label></td>
+                <td><input type="password" id ="spass" name="spass" ><i class="far fa-eye" id="togglePassword"></i></td>
+            </tr>
+            <tr>
+                <td><label name="confirmpassword">Confirm Password : </label></td>
+                <td><input type="password" id ="confirmpass" name="confirmpass" ></td>
+            </tr>
+            <tr><td><input type="submit" value="update"></td></tr>
+        </table>
+    </form>
+</center>
+    
+    {% include "footer.html" %}
+
+    <input type="hidden" id="alertdata" value="{{alertdata}}">
+
+    <script>
+
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#spass');
+        togglePassword.addEventListener('click', function (e) {
+            // toggle the type attribute
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+            // toggle the eye slash icon
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        var a = document.getElementById('alertdata').value;
+       
+        if (a=='b')
+        {
+            alert("Blank Value Inserted");
+        }
+        if (a=='c')
+        {
+            alert("incorrect state or district or city or area entered");
+        }
+        if (a=='d')
+        {
+            alert("Profile updated.");
+        }
+
+        $(function () {
+
+    
+
+            $("#state").autocomplete({
+                source: '/state',
+                minLength: 0,
+                scroll: true,
+        
+                select: function (event, ui) {
+                    document.getElementById("district").value = ""
+                    document.getElementById("city1").value = ""
+                    document.getElementById("area").value = "";
+                    statefunc(ui.item.value)
+                }
+        
+            }).focus(function () {
+                $(this).autocomplete("search", "");
+            });
+        });
+        
+        function statefunc(tempdata) {
+                   
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+        
+                    var districtdata = this.responseText;
+        
+                    var a = eval(districtdata);
+                    $("#district").autocomplete({
+                        source: function (request, response) {
+                            var matcher = new RegExp("^" + $.ui.autocomplete.escapeRegex(request.term), "i");
+                            response($.map(a, function (item) {
+                                if (matcher.test(item)) {
+                                    return (item)
+                                }
+                            }));
+                        },
+                        delay: 0,
+                        minLength: 0,
+                        scroll: true,
+                        select: function (event, ui) {
+                            document.getElementById("city1").value = ""
+                            document.getElementById("area").value = "";
+                            districtfunc(ui.item.value)
+                        }
+        
+                    }).focus(function () {
+                        $(this).autocomplete("search", "");
+                    });
+        
+        
+                }
+            };
+        
+            xhttp.open("post", "district", true);
+            xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhttp.send("statename=" + tempdata);
+        
+        }
+        
+        
+        
+        
+        
+        function districtfunc(tempdata) {
+                   
+            $("#city1").autocomplete({
+                source: function (request, response) {
+                    jQuery.get("citylist", {
+                        term: request.term,
+                        statedata:  document.getElementById("state").value,
+                        districtdata:  document.getElementById("district").value,
+                    }, function (data) {
+                        // assuming data is a JavaScript array such as
+                        // ["one@abc.de", "onf@abc.de","ong@abc.de"]
+                        // and not a string
+                        response(data);
+                    });
+                },
+                delay: 0,
+                minLength: 0,
+                scroll: true,
+                select: function (event, ui) {
+                    document.getElementById("area").value = "";
+                    cityfunc(ui.item.value);
+                }
+        
+            }).focus(function () {
+                $(this).autocomplete("search", "");
+            });
+        
+        }
+        
+        function cityfunc(tempdata) {
+              
+            $("#area").autocomplete({
+                source: function (request, response) {
+                    jQuery.get("arealist", {
+                        term: request.term,
+                        statedata:  document.getElementById("state").value,
+                        districtdata:  document.getElementById("district").value,
+                        citydata : document.getElementById("city1").value,
+                    }, function (data) {
+                        
+                        response(data);
+                    });
+                },
+                delay: 0,
+                minLength: 0,
+                scroll: true,
+                select: function (event, ui) {
+                    
+                    
+                }
+                
+        
+            }).focus(function () {
+                $(this).autocomplete("search", "");
+            });
+        
+        
+        }
+    </script>
+
+</body>
+</html>
