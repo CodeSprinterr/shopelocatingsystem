@@ -52,21 +52,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'shoplocatingsystem.urls'
 
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'shoplocatingapp/pages')],
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]
+
 
 WSGI_APPLICATION = 'shoplocatingsystem.wsgi.application'
 
@@ -103,12 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-MAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'apkidukan99@gmail.com'
-EMAIL_HOST_PASSWORD = 'a3ta3ta3t'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
