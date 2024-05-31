@@ -17,6 +17,7 @@ urlpatterns =[
     path('getshopname',views.getshopname,name='getshopname'),
     
     path('about',views.about,name='about'),
+    
     path('contactus',views.contactus,name='contactus'),
     
     
